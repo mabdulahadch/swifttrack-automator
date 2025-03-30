@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,27 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom SwiftTrack colors
+				swifttrack: {
+					50: '#f0f7ff',
+					100: '#e0eefe',
+					200: '#bae0fd',
+					300: '#7ccafb',
+					400: '#36aff5',
+					500: '#0e96e6',
+					600: '#0078c9',
+					700: '#0360a3',
+					800: '#075186',
+					900: '#0b446f',
+					950: '#082b4a'
+				},
+				status: {
+					pending: '#f59e0b',
+					processing: '#3b82f6',
+					dispatched: '#8b5cf6', 
+					delivered: '#10b981',
+					failed: '#ef4444'
 				}
 			},
 			borderRadius: {
@@ -84,11 +106,21 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-status': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.6' }
+				},
+				'slide-in': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(0)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-status': 'pulse-status 2s ease-in-out infinite',
+				'slide-in': 'slide-in 0.3s ease-out'
 			}
 		}
 	},
