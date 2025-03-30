@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { mockNotifications } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const TopBar = () => {
   const unreadNotifications = mockNotifications.filter(
@@ -33,6 +34,8 @@ const TopBar = () => {
       </div>
 
       <div className="flex items-center space-x-4">
+        <ThemeToggle />
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
