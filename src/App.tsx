@@ -1,45 +1,49 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Index from "./pages/Index";
-import Orders from "./pages/Orders";
-import Routing from "./pages/Routing";
-import Customers from "./pages/Customers";
-import Automation from "./pages/Automation";
-import Notifications from "./pages/Notifications";
-import Reports from "./pages/Reports";
-import NotFound from "./pages/NotFound";
-import Tracking from "./pages/Tracking";
+import { Toaster } from "@/components/ui/sonner";
 
-const queryClient = new QueryClient();
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import Index from "@/pages/Index";
+import Orders from "@/pages/Orders";
+import Customers from "@/pages/Customers";
+import Automation from "@/pages/Automation";
+import Notifications from "@/pages/Notifications";
+import Reports from "@/pages/Reports";
+import Routing from "@/pages/Routing";
+import Tracking from "@/pages/Tracking";
+import NotFound from "@/pages/NotFound";
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="system" storageKey="swifttrack-theme">
-      <TooltipProvider>
+const App = () => {
+  return (
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/tracking" element={<Tracking />} />
+
+          {/* Protected Routes - Redirect to login if not authenticated */}
+          <Route path="/dashboard/:userId" element={<Index />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/automation" element={<Automation />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/routing" element={<Routing />} />
+
+          {/* Redirect root to login */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          
+          {/* 404 Route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
         <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/routing" element={<Routing />} />
-            <Route path="/customers" element={<Customers />} />
-            <Route path="/automation" element={<Automation />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/tracking" element={<Tracking />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      </Router>
     </ThemeProvider>
-  </QueryClientProvider>
-);
+  );
+};
 
 export default App;
