@@ -1,35 +1,15 @@
 
-import jwt from 'jsonwebtoken';
-import { cookies } from 'next/headers';
+// This is a simplified auth utility with no actual authentication 
+// since we're removing login/registration functionality
 
-const JWT_SECRET = process.env.JWT_SECRET || 'swifttrack-secret-key';
-
-export const generateToken = (userId: string) => {
-  return jwt.sign({ id: userId }, JWT_SECRET, {
-    expiresIn: '30d',
-  });
+export const generateToken = () => {
+  return "mock-token";
 };
 
-export const verifyToken = (token: string) => {
-  try {
-    return jwt.verify(token, JWT_SECRET) as { id: string };
-  } catch (error) {
-    return null;
-  }
+export const verifyToken = () => {
+  return { id: "guest" };
 };
 
 export const getUserFromToken = () => {
-  try {
-    const cookieStore = cookies();
-    const token = cookieStore.get('token')?.value;
-    
-    if (!token) {
-      return null;
-    }
-    
-    return verifyToken(token);
-  } catch (error) {
-    console.error('Error getting user from token:', error);
-    return null;
-  }
+  return { id: "guest" };
 };

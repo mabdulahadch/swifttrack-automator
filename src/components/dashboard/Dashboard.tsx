@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardMetrics from "@/components/dashboard/DashboardMetrics";
 import RecentOrders from "@/components/dashboard/RecentOrders";
@@ -10,53 +10,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Search } from "lucide-react";
-import { toast } from "sonner";
 
 interface DashboardProps {
   userId: string;
 }
 
 const Dashboard = ({ userId }: DashboardProps) => {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('/api/user');
-        const data = await response.json();
-        
-        if (data.success) {
-          setUser(data.user);
-        } else {
-          toast.error(data.message || "Failed to load user data");
-        }
-      } catch (error) {
-        toast.error("Error loading user data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [userId]);
-
-  if (loading) {
-    return (
-      <MainLayout>
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
-        </div>
-      </MainLayout>
-    );
-  }
+  const defaultUser = {
+    name: "Guest User",
+    email: "guest@example.com"
+  };
 
   return (
     <MainLayout>
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <p className="text-muted-foreground">
-          Welcome to SwiftTrack Automator, {user?.name}
+          Welcome to SwiftTrack Automator, {defaultUser.name}
         </p>
       </div>
 

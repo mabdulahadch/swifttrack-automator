@@ -2,15 +2,15 @@
 import React from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 
-export default function OrdersPage() {
+export default function ReportsPage() {
   return (
     <MainLayout>
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Orders</h1>
-        <p className="text-muted-foreground">Manage your delivery orders</p>
+        <h1 className="text-3xl font-bold">Reports</h1>
+        <p className="text-muted-foreground">View analytics and generate reports</p>
         
         <div className="p-8 text-center">
-          <p>Orders management interface will be displayed here</p>
+          <p>Reports interface will be displayed here</p>
         </div>
       </div>
     </MainLayout>
