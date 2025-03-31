@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { verifyToken } from "@/lib/auth";
 import Dashboard from "@/components/dashboard/Dashboard";
 
-export default function DashboardPage({ 
+export default async function DashboardPage({ 
   params 
 }: { 
   params: { userId: string } 
