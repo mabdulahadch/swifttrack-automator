@@ -19,12 +19,17 @@ export const verifyToken = (token: string) => {
 };
 
 export const getUserFromToken = () => {
-  const cookieStore = cookies();
-  const token = cookieStore.get('token')?.value;
-  
-  if (!token) {
+  try {
+    const cookieStore = cookies();
+    const token = cookieStore.get('token')?.value;
+    
+    if (!token) {
+      return null;
+    }
+    
+    return verifyToken(token);
+  } catch (error) {
+    console.error('Error getting user from token:', error);
     return null;
   }
-  
-  return verifyToken(token);
 };

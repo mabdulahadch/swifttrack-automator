@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,9 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    phoneNumber: "",
+    address: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,16 +39,17 @@ const Register = () => {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          password: formData.password
+          password: formData.password,
+          phoneNumber: formData.phoneNumber || "",
+          address: formData.address || ""
         })
       });
 
       const data = await response.json();
 
       if (data.success) {
-        // Store the user ID for future use
-        localStorage.setItem('tempUserId', data.userId);
-        navigate("/login");
+        localStorage.setItem('userId', data.userId);
+        navigate(`/dashboard/${data.userId}`);
       } else {
         setError(data.message || "Registration failed");
       }

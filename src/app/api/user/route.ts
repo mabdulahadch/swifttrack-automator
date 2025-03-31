@@ -17,7 +17,7 @@ export async function GET() {
     
     await dbConnect();
     
-    const userData = await User.findById(user.id).select('-password');
+    const userData = await User.findById(user.id).select('-password').exec();
     
     if (!userData) {
       return NextResponse.json(

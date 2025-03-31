@@ -23,7 +23,7 @@ export async function GET(
     const order = await Order.findOne({
       _id: params.id,
       userId: user.id
-    });
+    }).exec();
     
     if (!order) {
       return NextResponse.json(
@@ -84,7 +84,7 @@ export async function PATCH(
         updatedAt: new Date()
       },
       { new: true }
-    );
+    ).exec();
     
     if (!order) {
       return NextResponse.json(

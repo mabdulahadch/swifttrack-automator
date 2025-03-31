@@ -9,19 +9,24 @@ export default function DashboardPage({
 }: { 
   params: { userId: string } 
 }) {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token")?.value;
-  
-  if (!token) {
+  try {
+    const cookieStore = cookies();
+    const token = cookieStore.get("token")?.value;
+    
+    if (!token) {
+      redirect("/login");
+    }
+    
+    const user = verifyToken(token);
+    
+    if (!user || user.id !== params.userId) {
+      // Either token is invalid or user is trying to access another user's dashboard
+      redirect("/login");
+    }
+    
+    return <Dashboard userId={params.userId} />;
+  } catch (error) {
+    console.error('Error in Dashboard page:', error);
     redirect("/login");
   }
-  
-  const user = verifyToken(token);
-  
-  if (!user || user.id !== params.userId) {
-    // Either token is invalid or user is trying to access another user's dashboard
-    redirect("/login");
-  }
-  
-  return <Dashboard userId={params.userId} />;
 }

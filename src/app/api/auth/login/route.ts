@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const { email, password } = await request.json();
 
     // Find the user and include the password for verification
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select('+password').exec();
     
     if (!user) {
       return NextResponse.json(
