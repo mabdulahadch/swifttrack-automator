@@ -18,7 +18,7 @@ export const verifyToken = (token: string) => {
   }
 };
 
-export const getUserFromToken = async () => {
+export const getUserFromToken = () => {
   const cookieStore = cookies();
   const token = cookieStore.get('token')?.value;
   
