@@ -26,7 +26,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   
   const menuItems = [
     { 
