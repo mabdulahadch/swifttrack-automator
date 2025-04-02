@@ -17,7 +17,11 @@ export async function GET() {
     
     await dbConnect();
     
+<<<<<<< HEAD
     const userData = await User.findById((await user).id).select('-password');
+=======
+    const userData = await User.findById(user.id).select('-password').exec();
+>>>>>>> d0a1f7a6ba64c0cee7ad06a61d01edfb2dc3f09c
     
     if (!userData) {
       return NextResponse.json(

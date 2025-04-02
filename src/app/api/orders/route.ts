@@ -21,13 +21,15 @@ export async function POST(request: Request) {
     // Generate a tracking ID
     const trackingId = `TRK-${Math.floor(Math.random() * 100000)}`;
     
-    const order = await Order.create({
+    const newOrder = new Order({
       ...orderData,
       userId: user.id,
       trackingId,
       createdAt: new Date(),
       updatedAt: new Date()
     });
+    
+    const order = await newOrder.save();
     
     return NextResponse.json({
       success: true,
@@ -72,13 +74,13 @@ export async function GET(request: Request) {
     
     const skip = (page - 1) * limit;
     
-    const [orders, total] = await Promise.all([
-      Order.find(query)
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit),
-      Order.countDocuments(query)
-    ]);
+    const orders = await Order.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .exec();
+      
+    const total = await Order.countDocuments(query);
     
     return NextResponse.json({
       success: true,

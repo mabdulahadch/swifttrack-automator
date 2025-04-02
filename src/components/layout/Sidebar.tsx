@@ -10,8 +10,7 @@ import {
   BarChart,
   Settings,
   CalendarClock,
-  Map,
-  LogOut
+  Map
 } from "lucide-react";
 import { 
   Sidebar as SidebarComponent, 
@@ -24,25 +23,16 @@ import {
   SidebarTrigger
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
   const pathname = usePathname();
-  const router = useRouter();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
-  
-  // Extract userId from the URL if we're on a dashboard page
-  const userId = pathname.startsWith('/dashboard/') 
-    ? pathname.split('/')[2] 
-    : '';
   
   const menuItems = [
     { 
       icon: Home, 
       label: "Dashboard", 
-      route: userId ? `/dashboard/${userId}` : "/"
+      route: "/dashboard"
     },
     { 
       icon: Package, 
@@ -81,26 +71,6 @@ const Sidebar = () => {
     },
   ];
 
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
-    try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST',
-      });
-      
-      if (response.ok) {
-        toast.success("Logged out successfully");
-        router.push('/login');
-      } else {
-        toast.error("Failed to logout");
-      }
-    } catch (error) {
-      toast.error("Error logging out");
-    } finally {
-      setIsLoggingOut(false);
-    }
-  };
-
   return (
     <SidebarComponent>
       <SidebarHeader className="p-4 flex flex-col items-center justify-center">
@@ -129,16 +99,6 @@ const Sidebar = () => {
                 <Settings className="h-4 w-4 mr-2" />
                 <span>Settings</span>
               </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton 
-              onClick={handleLogout}
-              disabled={isLoggingOut}
-              className="flex items-center text-destructive hover:text-destructive"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              <span>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

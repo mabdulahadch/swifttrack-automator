@@ -2,6 +2,7 @@
 // This file handles the automation logic for different workflows
 
 import { api } from './api';
+import { errorHandler, AppError } from '../lib/error-handler';
 
 /**
  * Automation service for handling all automated workflows
@@ -38,8 +39,7 @@ export const automationService = {
         details: results
       };
     } catch (error) {
-      console.error("Error processing new orders:", error);
-      return { processed: 0, failed: 0, error: error.message };
+      return await errorHandler.handleAutomationError(error, 'processNewOrders');
     }
   },
 
@@ -88,8 +88,7 @@ export const automationService = {
         details: results
       };
     } catch (error) {
-      console.error("Error scheduling dispatches:", error);
-      return { dispatched: 0, failed: 0, error: error.message };
+      return await errorHandler.handleAutomationError(error, 'scheduleDispatches');
     }
   },
 
@@ -137,8 +136,7 @@ export const automationService = {
         details: results
       };
     } catch (error) {
-      console.error("Error handling exceptions:", error);
-      return { error: error.message };
+      return await errorHandler.handleAutomationError(error, 'handleExceptions');
     }
   },
 
@@ -171,8 +169,7 @@ export const automationService = {
         summary: reportContent.summary
       };
     } catch (error) {
-      console.error("Error generating reports:", error);
-      return { success: false, error: error.message };
+      return await errorHandler.handleAutomationError(error, 'generateReports');
     }
   }
 };

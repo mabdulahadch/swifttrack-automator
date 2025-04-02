@@ -1,6 +1,8 @@
 
 // This file handles sending notifications to customers and administrators
 
+import { errorHandler, AppError } from '../lib/error-handler';
+
 /**
  * Notification service for sending various types of alerts
  */
@@ -15,8 +17,7 @@ export const notificationService = {
     const template = getNotificationTemplate(type, data);
     
     if (!template) {
-      console.error(`Invalid notification type: ${type}`);
-      return { success: false, error: "Invalid notification type" };
+      throw new AppError('Invalid notification type', 'INVALID_NOTIFICATION_TYPE', { type });
     }
     
     // Get customer contact preferences (in a real app, this would come from the database)
@@ -68,8 +69,7 @@ export const notificationService = {
     const template = getAdminNotificationTemplate(type, data);
     
     if (!template) {
-      console.error(`Invalid admin notification type: ${type}`);
-      return { success: false, error: "Invalid notification type" };
+      throw new AppError('Invalid admin notification type', 'INVALID_NOTIFICATION_TYPE', { type });
     }
     
     // In a real app, this would send to all admins or specific roles
@@ -91,14 +91,14 @@ export const notificationService = {
     const order = await mockGetOrderDetails(orderId);
     
     if (!order) {
-      return { success: false, error: "Order not found" };
+      throw new AppError('Order not found', 'ORDER_NOT_FOUND', { orderId });
     }
     
     // Map status to notification type
     const notificationType = mapStatusToNotificationType(status);
     
     if (!notificationType) {
-      return { success: false, error: "No notification for this status" };
+      throw new AppError('No notification configured for this status', 'INVALID_STATUS', { status });
     }
     
     // Prepare notification data
@@ -143,11 +143,10 @@ export const notificationService = {
               req.status
             );
           } else {
-            return { success: false, error: "Invalid notification request type" };
+            throw new AppError('Invalid notification request type', 'INVALID_REQUEST_TYPE', { type: req.type });
           }
         } catch (error) {
-          console.error("Error processing notification:", error);
-          return { success: false, error: error.message };
+          return errorHandler.handleNotificationError(error, req.type);
         }
       })
     );
