@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.js";
 
 @layer base {
   :root {
@@ -85,12 +84,12 @@
 }
 
 @layer base {
-  /* * {
-    @apply border-border;
-  } */
+  * {
+    @apply border-border;  /* This is causing an error */
+  }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground;  /* This is causing an error */
   }
 }
 

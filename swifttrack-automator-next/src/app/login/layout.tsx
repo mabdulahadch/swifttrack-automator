@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Inter } from "next/font/google";
-// import '../globals.css';
+import '../globals.css';
 import type { ReactNode } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
