@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-//   darkMode: ['class'],
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -16,12 +16,23 @@ const config: Config = {
       },
     },
     extend: {
+      // Move colors inside extend to properly merge with default theme
       colors: {
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        border: {
+          DEFAULT: 'hsl(var(--border, 220, 13%, 91%))', // Added DEFAULT value
+        },
+        input: {
+          DEFAULT: 'hsl(var(--input))',
+        },
+        ring: {
+          DEFAULT: 'hsl(var(--ring))',
+        },
+        background: {
+          DEFAULT: 'hsl(var(--background))',
+        },
+        foreground: {
+          DEFAULT: 'hsl(var(--foreground))',
+        },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -61,7 +72,7 @@ const config: Config = {
             DEFAULT: 'hsl(var(--sidebar-accent))',
             foreground: 'hsl(var(--sidebar-accent-foreground))',
           },
-          border: 'hsl(var(--sidebar-border))',
+          border: 'hsl(var(--sidebar-border, 220, 13%, 91%))',
           ring: 'hsl(var(--sidebar-ring))',
         },
         status: {
